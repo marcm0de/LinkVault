@@ -9,6 +9,7 @@ import { generateId, getFaviconUrl } from '@/lib/utils';
 export default function AddBookmarkPage() {
   const router = useRouter();
   const addBookmark = useBookmarkStore((s) => s.addBookmark);
+  const bookmarks = useBookmarkStore((s) => s.bookmarks);
   const collections = useBookmarkStore((s) => s.collections);
 
   const [url, setUrl] = useState('');
@@ -19,9 +20,34 @@ export default function AddBookmarkPage() {
   const [collectionId, setCollectionId] = useState('');
   const [fetching, setFetching] = useState(false);
   const [saved, setSaved] = useState(false);
+  const [duplicateWarning, setDuplicateWarning] = useState<string | null>(null);
+
+  const checkDuplicate = (urlToCheck: string) => {
+    const normalizedUrl = urlToCheck.startsWith('http') ? urlToCheck : `https://${urlToCheck}`;
+    try {
+      const check = new URL(normalizedUrl);
+      const normalized = `${check.hostname}${check.pathname}`.replace(/\/$/, '');
+      const existing = bookmarks.find((b) => {
+        try {
+          const existing = new URL(b.url);
+          return `${existing.hostname}${existing.pathname}`.replace(/\/$/, '') === normalized;
+        } catch {
+          return false;
+        }
+      });
+      if (existing) {
+        setDuplicateWarning(`This URL already exists: "${existing.title}"`);
+      } else {
+        setDuplicateWarning(null);
+      }
+    } catch {
+      setDuplicateWarning(null);
+    }
+  };
 
   const fetchMetadata = async () => {
     if (!url) return;
+    checkDuplicate(url);
     setFetching(true);
     try {
       // Try fetching metadata via our API route
@@ -104,6 +130,11 @@ export default function AddBookmarkPage() {
                 <div className="flex items-center gap-1.5 mt-1.5 text-xs text-blue-600">
                   <Loader2 className="w-3 h-3 animate-spin" />
                   Fetching page info...
+                </div>
+              )}
+              {duplicateWarning && (
+                <div className="flex items-center gap-1.5 mt-1.5 text-xs text-amber-600 bg-amber-50 px-2 py-1.5 rounded-lg">
+                  ⚠️ {duplicateWarning}
                 </div>
               )}
             </div>

@@ -9,6 +9,7 @@ import {
   PlusCircle,
   Upload,
   Settings,
+  Shield,
   X,
 } from 'lucide-react';
 import { cn } from '@/lib/utils';
@@ -20,6 +21,7 @@ const navItems = [
   { href: '/tags', label: 'Tags', icon: Tags },
   { href: '/add', label: 'Add Bookmark', icon: PlusCircle },
   { href: '/import', label: 'Import', icon: Upload },
+  { href: '/link-checker', label: 'Link Checker', icon: Shield },
   { href: '/settings', label: 'Settings', icon: Settings },
 ];
 

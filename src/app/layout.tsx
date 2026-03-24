@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import './globals.css';
 import Shell from '@/components/Shell';
+import KeyboardShortcuts from '@/components/KeyboardShortcuts';
 
 export const metadata: Metadata = {
   title: 'LinkVault — Self-hosted Bookmark Manager',
@@ -16,6 +17,7 @@ export default function RootLayout({
     <html lang="en">
       <body className="bg-gray-50 text-gray-900">
         <Shell>{children}</Shell>
+        <KeyboardShortcuts />
       </body>
     </html>
   );
