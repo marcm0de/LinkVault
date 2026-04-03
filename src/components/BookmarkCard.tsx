@@ -105,6 +105,20 @@ export default function BookmarkCard({ bookmark, viewMode, onEdit }: BookmarkCar
       exit={{ opacity: 0, scale: 0.95 }}
       className="bg-white border border-gray-100 rounded-xl overflow-hidden hover:border-gray-200 hover:shadow-md transition-all group"
     >
+      {/* Preview thumbnail */}
+      {bookmark.previewImage && (
+        <div className="w-full h-32 bg-gray-100 overflow-hidden">
+          <img
+            src={bookmark.previewImage}
+            alt=""
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            onError={(e) => {
+              (e.target as HTMLImageElement).parentElement!.style.display = 'none';
+            }}
+          />
+        </div>
+      )}
+
       {/* Card header with favicon and domain */}
       <div className="px-4 pt-4 pb-2 flex items-start justify-between">
         <div className="flex items-center gap-2.5 min-w-0">

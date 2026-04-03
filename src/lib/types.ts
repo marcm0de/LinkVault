@@ -4,6 +4,7 @@ export interface Bookmark {
   title: string;
   description: string;
   favicon: string;
+  previewImage?: string; // og:image URL for thumbnail preview
   tags: string[];
   collectionId: string | null;
   notes: string;

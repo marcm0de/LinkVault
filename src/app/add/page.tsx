@@ -18,6 +18,7 @@ export default function AddBookmarkPage() {
   const [tags, setTags] = useState('');
   const [notes, setNotes] = useState('');
   const [collectionId, setCollectionId] = useState('');
+  const [previewImage, setPreviewImage] = useState('');
   const [fetching, setFetching] = useState(false);
   const [saved, setSaved] = useState(false);
   const [duplicateWarning, setDuplicateWarning] = useState<string | null>(null);
@@ -56,6 +57,7 @@ export default function AddBookmarkPage() {
         const data = await res.json();
         if (data.title && !title) setTitle(data.title);
         if (data.description && !description) setDescription(data.description);
+        if (data.image && !previewImage) setPreviewImage(data.image);
       }
     } catch {
       // Fallback: just use the URL as title
@@ -83,6 +85,7 @@ export default function AddBookmarkPage() {
       title: title || finalUrl,
       description,
       favicon: getFaviconUrl(finalUrl),
+      previewImage: previewImage || undefined,
       tags: tags.split(',').map((t) => t.trim()).filter(Boolean),
       collectionId: collectionId || null,
       notes,
