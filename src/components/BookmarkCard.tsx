@@ -42,7 +42,8 @@ export default function BookmarkCard({ bookmark, viewMode, onEdit }: BookmarkCar
         initial={{ opacity: 0, y: 10 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -10 }}
-        className="flex items-center gap-4 px-4 py-3 bg-white border border-gray-100 rounded-xl hover:border-gray-200 hover:shadow-sm transition-all group"
+        className="flex items-center gap-4 px-4 py-3 bg-white border border-gray-100 rounded-xl hover:border-blue-200 hover:shadow-md transition-all duration-200 group"
+      whileHover={{ x: 2 }}
       >
         <img
           src={bookmark.favicon || `https://www.google.com/s2/favicons?domain=${extractDomain(bookmark.url)}&sz=32`}
@@ -103,7 +104,8 @@ export default function BookmarkCard({ bookmark, viewMode, onEdit }: BookmarkCar
       initial={{ opacity: 0, scale: 0.95 }}
       animate={{ opacity: 1, scale: 1 }}
       exit={{ opacity: 0, scale: 0.95 }}
-      className="bg-white border border-gray-100 rounded-xl overflow-hidden hover:border-gray-200 hover:shadow-md transition-all group"
+      className="bg-white border border-gray-100 rounded-xl overflow-hidden hover:border-blue-200 transition-all duration-200 group"
+      whileHover={{ y: -3, boxShadow: '0 8px 25px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.04)' }}
     >
       {/* Preview thumbnail */}
       {bookmark.previewImage && (
@@ -111,7 +113,7 @@ export default function BookmarkCard({ bookmark, viewMode, onEdit }: BookmarkCar
           <img
             src={bookmark.previewImage}
             alt=""
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            className="w-full h-full object-cover group-hover:scale-[1.06] transition-transform duration-500 ease-out"
             onError={(e) => {
               (e.target as HTMLImageElement).parentElement!.style.display = 'none';
             }}
@@ -173,7 +175,7 @@ export default function BookmarkCard({ bookmark, viewMode, onEdit }: BookmarkCar
             <button
               key={tag}
               onClick={() => toggleTag(tag)}
-              className="px-2 py-0.5 text-[11px] bg-gray-50 text-gray-500 rounded-full hover:bg-blue-50 hover:text-blue-600 transition-colors"
+              className="px-2 py-0.5 text-[11px] bg-gray-50 text-gray-500 rounded-full hover:bg-blue-50 hover:text-blue-600 transition-all duration-150 hover:shadow-sm"
             >
               {tag}
             </button>
@@ -204,7 +206,7 @@ function DropdownMenu({
   return (
     <>
       <div className="fixed inset-0 z-10" onClick={onClose} />
-      <div className="absolute right-0 top-8 z-20 w-40 bg-white border border-gray-200 rounded-lg shadow-lg py-1">
+      <div className="absolute right-0 top-8 z-20 w-40 bg-white border border-gray-200 rounded-xl shadow-xl py-1.5 animate-[fadeIn_0.15s_ease-out]">
         <button
           onClick={onEdit}
           className="w-full flex items-center gap-2 px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-50"
